@@ -3,14 +3,14 @@
  * @package download-contact-to-csv
  */
 /*
- Plugin Name: download-contact-to-csv
-  Plugin URI: http://www.download-contact-to-csv.com/
+ Plugin Name: feed-my-tweet
+  Plugin URI: https://rajendram.sgedu.site/
   Description: Download csv file from contact page.
   Version: 1.0.0
   Author: Rajendra Kumar Manandhar
-  Author URI: http://www.download-contact-to-csv.com
+  Author URI: https://rajendram.sgedu.site/
   License: GPLv2 or later
-  Text Domain: download-contact-to-csv
+  Text Domain: feed-my-tweet
  */
 
 
