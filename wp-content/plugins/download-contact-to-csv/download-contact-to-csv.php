@@ -52,6 +52,7 @@ function my_cool_plugin_create_menu() {
 function register_my_cool_plugin_settings() {
 	//register our settings
 	register_setting( 'my-cool-plugin-settings-group', 'screenName' );
+	register_setting( 'my-cool-plugin-settings-group', 'tweetsToShow' );
 	register_setting( 'my-cool-plugin-settings-group', 'oauthAccessToken' );
 	register_setting( 'my-cool-plugin-settings-group', 'oauthAccessTokenSecret' );
 	register_setting( 'my-cool-plugin-settings-group', 'oauthConsumerKey' );
@@ -61,15 +62,20 @@ function register_my_cool_plugin_settings() {
 function my_cool_plugin_settings_page() {
 ?>
 <div class="wrap">
-<h1>Your Plugin Name</h1>
+<h1>Feed My Tweet</h1>
 
 <form method="post" action="options.php">
     <?php settings_fields( 'my-cool-plugin-settings-group' ); ?>
     <?php do_settings_sections( 'my-cool-plugin-settings-group' ); ?>
     <table class="form-table">
+
         <tr valign="top">
 	        <th scope="row">Screen Name</th>
 	        <td><input type="text" name="screenName" value="<?php echo esc_attr( get_option('screenName') ); ?>" /></td>
+        </tr>
+        <tr valign="top">
+	        <th scope="row">Tweets to show</th>
+	        <td><input type="text" name="tweetsToShow" value="<?php echo esc_attr( get_option('tweetsToShow') ); ?>" /></td>
         </tr>
 
         <tr valign="top">
@@ -110,18 +116,13 @@ function twitter_feed_shortcode($atts)
     extract(shortcode_atts(array(
         'tweets_to_show'=> '',
     ), $atts));
-    $count = $tweets_to_show; // How many tweets to output
-    $retweets = 0; // 0 to exclude, 1 to include
-    // $screen_name = "WEN";
+    $count = get_option('tweetsToShow'); // How many tweets to output
+    $retweets = 1; // 0 to exclude, 1 to include
     $screen_name = get_option('screenName');
     // Populate these with the keys/tokens you just obtained
-    // $oauthAccessToken = "1540534682-FZk1i3n8ySKw0K87i1SVB8WeJV837xX5M1Dsze7";
     $oauthAccessToken = get_option('oauthAccessToken');
-    // $oauthAccessTokenSecret = "YpgtLb6kr88iJZyAIbahhC2kYRNxNH7af4fj49B4CaLj3";
     $oauthAccessTokenSecret = get_option('oauthAccessTokenSecret');
-    // $oauthConsumerKey = "Ck1c8LC9uDtOfmFyp9vti32fv";
     $oauthConsumerKey = get_option('oauthConsumerKey');
-    // $oauthConsumerSecret = "BYFqXCjq4zRC7uvV1w4H5KWDfFy3vutzlbKPSYmO60DGLv2PKK";
     $oauthConsumerSecret = get_option('oauthConsumerSecret');
 
     // First we populate an array with the parameters needed by the API
