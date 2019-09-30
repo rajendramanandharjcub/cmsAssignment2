@@ -14,100 +14,41 @@
  */
 
 
-// define('ABSPATH') or die('You cant access this file');
+defined('ABSPATH') or die('You cant access this file');
 
-// class DownloadContactToCSV
-// {
-// 	__construct($arg1){
-// 		echo $arg1;
-// 	}
+class TweetMyFeed
+{
 
+	function activate(){
+		flush_rewrite_rules();
+	}
 
-// }
+	function deactivate(){
 
-// $downloadContactToCSV = new DownloadContactToCSV();
+	}
 
+	function uninstall(){
 
-// if(class_exists('DownloadContactToCSV')){
-// 	$downloadContactToCSV = new DownloadContactToCSV();
-// }
+	}
 
-
-//for settings
-  
- // create custom plugin settings menu
-add_action('admin_menu', 'my_cool_plugin_create_menu');
-
-function my_cool_plugin_create_menu() {
-
-	//create new top-level menu
-	// add_menu_page('My Cool Plugin Settings', 'Cool Settings', 'administrator', __FILE__, 'my_cool_plugin_settings_page' , plugins_url('/images/icon.png', __FILE__) );
-	add_menu_page('Tweet My Feed Plugin Settings', 'Tweet My Feed Settings', 'administrator', __FILE__, 'my_cool_plugin_settings_page' , plugins_url('/images/icon.png', __FILE__) );
-
-	//call register settings function
-	add_action( 'admin_init', 'register_my_cool_plugin_settings' );
 }
 
+$tweetMyFeed = new TweetMyFeed();
 
-function register_my_cool_plugin_settings() {
-	//register our settings
-	register_setting( 'my-cool-plugin-settings-group', 'screenName' );
-	register_setting( 'my-cool-plugin-settings-group', 'tweetsToShow' );
-	register_setting( 'my-cool-plugin-settings-group', 'oauthAccessToken' );
-	register_setting( 'my-cool-plugin-settings-group', 'oauthAccessTokenSecret' );
-	register_setting( 'my-cool-plugin-settings-group', 'oauthConsumerKey' );
-	register_setting( 'my-cool-plugin-settings-group', 'oauthConsumerSecret' );
+if(class_exists('TweetMyFeed')){
+	$tweetMyFeed = new tweetMyFeed();
 }
 
-function my_cool_plugin_settings_page() {
-?>
+//activation
+register_activation_hook(__FILE__,array($tweetMyFeed,'activate'));
+
+//deactivate
+register_activation_hook(__FILE__,array($tweetMyFeed,'deactivate'));
 
 
-<div class="wrap">
-<h1>Tweet My Feed</h1>
 
-<form method="post" action="options.php">
-    <?php settings_fields( 'my-cool-plugin-settings-group' ); ?>
-    <?php do_settings_sections( 'my-cool-plugin-settings-group' ); ?>
-    <table class="form-table">
-
-        <tr valign="top">
-	        <th scope="row">Screen Name</th>
-	        <td><input type="text" name="screenName" value="<?php echo esc_attr( get_option('screenName') ); ?>" /></td>
-        </tr>
-        <tr valign="top">
-	        <th scope="row">Tweets to show</th>
-	        <td><input type="text" name="tweetsToShow" value="<?php echo esc_attr( get_option('tweetsToShow') ); ?>" /></td>
-        </tr>
-
-        <tr valign="top">
-	        <th scope="row">oauth Access Token</th>
-	        <td><input type="text" name="oauthAccessToken" value="<?php echo esc_attr( get_option('oauthAccessToken') ); ?>" /></td>
-        </tr>
-
-        <tr valign="top">
-	        <th scope="row">oauth Access Secret</th>
-	        <td><input type="text" name="oauthAccessTokenSecret" value="<?php echo esc_attr( get_option('oauthAccessTokenSecret') ); ?>" /></td>
-        </tr>
-
-        <tr valign="top">
-	        <th scope="row">oauth Consumer Key</th>
-	        <td><input type="text" name="oauthConsumerKey" value="<?php echo esc_attr( get_option('oauthConsumerKey') ); ?>" /></td>
-        </tr>
-
-        <tr valign="top">
-	        <th scope="row">oauth Consumer Secret</th>
-	        <td><input type="text" name="oauthConsumerSecret" value="<?php echo esc_attr( get_option('oauthConsumerSecret') ); ?>" /></td>
-        </tr>
-         
-    </table>
-    
-    <?php submit_button(); ?>
-
-</form>
-
-</div>
-<?php } 
+ // create tweet-my-feed plugin settings menu
+include("tweet-my-feed-setting.php");
 
 // twitter code
 
@@ -119,7 +60,7 @@ function twitter_feed_shortcode($atts)
         'tweets_to_show'=> '',
     ), $atts));
     $count = get_option('tweetsToShow'); // How many tweets to output
-    $retweets = 1; // 0 to exclude, 1 to include
+    $retweets = 0; // 0 to exclude, 1 to include
     $screen_name = get_option('screenName');
     // Populate these with the keys/tokens you just obtained
     $oauthAccessToken = get_option('oauthAccessToken');
@@ -174,7 +115,7 @@ function twitter_feed_shortcode($atts)
         ?>
         
 
-        <!-- twitter example  -->
+        <!-- twitter   -->
         
    <div class="container">
       <div class="col-md-4">
