@@ -42,7 +42,7 @@ function my_cool_plugin_create_menu() {
 
 	//create new top-level menu
 	// add_menu_page('My Cool Plugin Settings', 'Cool Settings', 'administrator', __FILE__, 'my_cool_plugin_settings_page' , plugins_url('/images/icon.png', __FILE__) );
-	add_menu_page('My Twitter Plugin Settings', 'Twitter settings', 'administrator', __FILE__, 'my_cool_plugin_settings_page' , plugins_url('/images/icon.png', __FILE__) );
+	add_menu_page('Tweet My Feed Plugin Settings', 'Tweet My Feed Settings', 'administrator', __FILE__, 'my_cool_plugin_settings_page' , plugins_url('/images/icon.png', __FILE__) );
 
 	//call register settings function
 	add_action( 'admin_init', 'register_my_cool_plugin_settings' );
@@ -64,7 +64,7 @@ function my_cool_plugin_settings_page() {
 
 
 <div class="wrap">
-<h1>Feed My Tweet</h1>
+<h1>Tweet My Feed</h1>
 
 <form method="post" action="options.php">
     <?php settings_fields( 'my-cool-plugin-settings-group' ); ?>
