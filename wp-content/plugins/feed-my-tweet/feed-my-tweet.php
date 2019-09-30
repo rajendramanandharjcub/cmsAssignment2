@@ -16,39 +16,10 @@
 
 defined('ABSPATH') or die('You cant access this file');
 
-class TweetMyFeed
-{
-
-	function activate(){
-		flush_rewrite_rules();
-	}
-
-	function deactivate(){
-
-	}
-
-	function uninstall(){
-
-	}
-
-}
-
-$tweetMyFeed = new TweetMyFeed();
-
-if(class_exists('TweetMyFeed')){
-	$tweetMyFeed = new tweetMyFeed();
-}
-
-//activation
-register_activation_hook(__FILE__,array($tweetMyFeed,'activate'));
-
-//deactivate
-register_activation_hook(__FILE__,array($tweetMyFeed,'deactivate'));
-
-
 
  // create tweet-my-feed plugin settings menu
 include("tweet-my-feed-setting.php");
+
 
 // twitter code
 
@@ -107,11 +78,7 @@ function twitter_feed_shortcode($atts)
 
     $testing = wp_remote_get("https://api.twitter.com/1.1/statuses/user_timeline.json?tweet_mode=extended&count=".$count."&include_rts=".$retweets);
     // $json now contains the response from the Twitter API, which should include however many tweets we asked for.
-    if( $show_in_slider == "true"){
-        $slider_class = "twitter-slider";
-    } else {
-        $slider_class = "";
-    }
+
         ?>
         
 
@@ -159,12 +126,12 @@ function twitter_feed_shortcode($atts)
 	            		 
             			
             		</div>
-            		
-                
-</div>
+				</div>
 
             </div>
-            <?php } ?>
+            <?php 
+	        	} 
+	        ?>
          </div>
       </div>
    </div>
